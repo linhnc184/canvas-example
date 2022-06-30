@@ -1,2 +1,5 @@
 # canvas-example
-canvas is awesome
+
+Canvas is awesome
+
+Some simple examples to learn canvas

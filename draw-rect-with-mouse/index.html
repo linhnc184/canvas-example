@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag Drop</title>
+</head>
+<body>
+  <div style="display: flex; font-size: 20px;">
+    <canvas id="canvas" width="800" height="800" style="border: 1px solid;"></canvas>
+    <div style="padding: 20px;">
+      Mouse events:
+      <div>
+        <input type="radio" name="mouse_event" value="onmousemove" id="onmousemove">
+        <label for="onmousemove">onmousemove</label>
+      </div>
+      <div>
+        <input type="radio" name="mouse_event" value="onmousedown" id="onmousedown">
+        <label for="onmousedown">onmousedown</label>
+      </div>
+      <div>
+        <input type="radio" name="mouse_event" value="onmouseup" id="onmouseup">
+        <label for="onmouseup">onmouseup</label>
+      </div>
+      <div>
+        <button id="clearAll">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const eventInputs = document.getElementsByName("mouse_event");
+      const clearAllBtn = document.getElementById("clearAll");
+      const canvas      = document.getElementById("canvas");
+      const ctx         = canvas.getContext('2d');
+      const clearAll    = () => ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const drawReact   = (mouseEvent) => {
+        const width     = 20;
+        const height    = 20;
+        ctx.fillStyle   = 'green';
+        ctx.strokeStyle = 'red';
+        ctx.fillRect(mouseEvent.x - width, mouseEvent.y - height, width, height);
+        ctx.strokeRect(mouseEvent.x - width, mouseEvent.y - height, width, height);
+      }
+
+      let currentEvent  = null;
+
+      eventInputs.forEach((input) => {
+        input.onchange = e => {
+          canvas[currentEvent] = () => {};
+          currentEvent = e.target.value;
+          canvas[e.target.value] = drawReact;
+        }
+      });
+
+      clearAllBtn.onclick = clearAll;
+    }
+  </script>
+</body>
+</html>
