@@ -25,6 +25,7 @@
       </div>
       <div>
         <button id="clearAll">Clear All</button>
+        <button id="download">download</button>
       </div>
     </div>
   </div>
@@ -34,15 +35,25 @@
       const eventInputs = document.getElementsByName("mouse_event");
       const clearAllBtn = document.getElementById("clearAll");
       const canvas      = document.getElementById("canvas");
+      const downloadBnt = document.getElementById("download");
       const ctx         = canvas.getContext('2d');
-      const clearAll    = () => ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const drawReact   = (mouseEvent) => {
+
+      const drawReact = (mouseEvent) => {
         const width     = 20;
         const height    = 20;
         ctx.fillStyle   = 'green';
         ctx.strokeStyle = 'red';
         ctx.fillRect(mouseEvent.x - width, mouseEvent.y - height, width, height);
         ctx.strokeRect(mouseEvent.x - width, mouseEvent.y - height, width, height);
+      }
+
+      const clearAll = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const download = () => {
+        const link    = document.createElement('a');
+        link.download = 'image.png';
+        link.href     = canvas.toDataURL();
+        link.click();
       }
 
       let currentEvent  = null;
@@ -56,6 +67,7 @@
       });
 
       clearAllBtn.onclick = clearAll;
+      downloadBnt.onclick = download;
     }
   </script>
 </body>
